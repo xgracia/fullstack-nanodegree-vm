@@ -216,4 +216,7 @@
             });
         }
     };
+
+    /* Start */
+    app.controller.init();
 })();
