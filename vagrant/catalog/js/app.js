@@ -167,6 +167,42 @@
             app.model.create('category', category, function(){
                 app.view.render();
             });
+        },
+        addItem: function(item, category){
+            item = (item || '').trim();
+            category = (category || '').trim();
+
+            if(item === ''){
+                app.view.show('invalid item', 'error');
+                return;
+            }
+
+            // first create the item
+            app.model.create('item', item, function(itemData){
+                if(category === ''){
+                    // Item will be uncategorized
+                    app.view.render();
+                    return;
+                }
+
+                // get the Category ID
+                app.model.read('category', {name: category}, function(categories){
+                    if(categories.length === 0){
+                        app.view.show('Category not found. Item will be uncategorized.', 'warning');
+                        app.view.render();
+                        return;
+                    }
+                    if(categories.length > 1){
+                        app.view.show('Multiple categories found. A random one will be choosen.', 'warning');
+                    }
+
+                    // update the item with the found Cateogry ID
+                    categoryId = categories[0].id;
+                    app.model.update('item', itemData.id, {category: categoryId}, function(){
+                        app.view.render();
+                    });
+                });
+            });
         }
     };
 
