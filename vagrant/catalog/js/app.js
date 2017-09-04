@@ -71,6 +71,38 @@
                 // all search critera matched
                 return true;
             }));
+        },
+        update: function(type, id, newData, callback){
+            callback = callback || function(){};
+
+            // cannot perform an update without an id or new data
+            if(!id || !newData){
+                return;
+            }
+
+            // check for a valid type
+            if(type === 'category'){
+                types = this.data.categories;
+            }
+            else if(type === 'item'){
+                types = this.data.items;
+            }
+            else{
+                // invalid type
+                return;
+            }
+
+            /* https://github.com/tastejs/todomvc/blob/master/examples/vanillajs/js/store.js#L85 */
+            for(var i = 0; i < types.length; i++){
+                if(types[i].id === id){
+                    for(var key in newData){
+                        types[i][key] = newData[key];
+                    }
+                }
+            }
+
+            callback.call(this, types);
+
         }
     };
     /* Helper Functions */
