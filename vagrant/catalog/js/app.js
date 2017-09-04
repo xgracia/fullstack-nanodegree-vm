@@ -5,6 +5,31 @@
         data: {
             "categories": [],
             "items": []
+        },
+        create: function(type, name, callback){
+            name = (name || '').trim();
+            callback = callback || function(){};
+
+            newData = {
+                "id": app.helpers.uuidv4(),
+                "name": name
+            };
+
+            // check for a valid type
+            if(type === 'category'){
+                types = this.data.categories;
+            }
+            else if(type === 'item'){
+                types = this.data.items;
+                newData.category = null;
+            }
+            else{
+                // invalid type
+                return;
+            }
+
+            types.push(newData);
+            callback.call(this, newData);
         }
     };
     /* Helper Functions */
