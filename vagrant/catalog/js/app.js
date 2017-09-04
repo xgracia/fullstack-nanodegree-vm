@@ -1,6 +1,12 @@
 (function(){
     window.app = window.app || {};
 
+    app.model = {
+        data: {
+            "categories": [],
+            "items": []
+        }
+    };
     /* Helper Functions */
     app.helpers = {
         uuidv4: function(){
