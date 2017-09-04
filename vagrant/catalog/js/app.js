@@ -105,6 +105,11 @@
 
         }
     };
+
+    app.view = {
+        render: function(){
+        }
+    };
     /* Helper Functions */
     app.helpers = {
         uuidv4: function(){
