@@ -151,6 +151,13 @@
             }
         }
     };
+
+    app.controller = {
+        init: function(){
+            app.view.render();
+        }
+    };
+
     /* Helper Functions */
     app.helpers = {
         uuidv4: function(){
