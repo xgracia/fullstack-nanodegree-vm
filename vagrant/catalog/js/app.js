@@ -130,6 +130,25 @@
                     console.log('    - ' + item.name);
                 }
             });
+        },
+        show: function(msg, type){
+            msg = (msg || '').trim();
+            type = (type || '').trim();
+
+            if(msg === ''){
+                return;
+            }
+
+            switch(type){
+                case 'error':
+                    console.error('Error: ' + msg);
+                    break;
+                case 'warning':
+                    console.warn('Warning: ' + msg);
+                    break;
+                default:
+                    console.log('Info: ' + msg);
+            }
         }
     };
     /* Helper Functions */
