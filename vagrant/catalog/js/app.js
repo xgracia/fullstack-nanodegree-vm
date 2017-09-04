@@ -108,6 +108,28 @@
 
     app.view = {
         render: function(){
+            categories = app.model.data.categories;
+            items = app.model.data.items;
+
+            categories.forEach(function(category) {
+                console.log('- ' + category.name);
+                items.forEach(function(item){
+                    if(item.category === category.id){
+                        console.log('    - ' + item.name);
+                    }
+                });
+            });
+
+            printedHeader = false;
+            items.forEach(function(item){
+                if(!item.category){
+                    if(!printedHeader){
+                        console.log('- Uncategorized');
+                        printedHeader = true;
+                    }
+                    console.log('    - ' + item.name);
+                }
+            });
         }
     };
     /* Helper Functions */
