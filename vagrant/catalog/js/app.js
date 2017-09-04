@@ -155,6 +155,18 @@
     app.controller = {
         init: function(){
             app.view.render();
+        },
+        addCategory: function(category){
+            category = (category || '').trim();
+
+            if(category === ''){
+                app.view.show('invalid category', 'error');
+                return;
+            }
+
+            app.model.create('category', category, function(){
+                app.view.render();
+            });
         }
     };
 
