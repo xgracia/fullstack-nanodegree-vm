@@ -2,63 +2,66 @@
     "categories": [
         {
             "id": 1,
-            "name": "Cars",
-            "items": [
-                {
-                    "id": 1,
-                    "name": "Tesla Model S",
-                    "img": "https://i.ytimg.com/vi/Eb41ppq-ATU/maxresdefault.jpg",
-                    "url": "https://www.tesla.com/models"
-                },
-                {
-                    "id": 2,
-                    "name": "Tesla Model 3",
-                    "img": "http://st.motortrend.com/uploads/sites/5/2016/03/Tesla-Model-3-front-view-from-above-in-silver.jpg",
-                    "url": "https://www.tesla.com/model3"
-                }
-            ]
+            "name": "Cars"
         },
         {
             "id": 2,
-            "name": "Trucks",
-            "items": [
-                {
-                    "id": 3,
-                    "name": "Ford Raptor",
-                    "img": "http://st.hotrod.com/uploads/sites/21/2016/12/034-Raptor-Press-Photo.jpg",
-                    "url": "http://www.ford.com/trucks/f150/2018/models/f150-raptor/"
-                },
-                {
-                    "id": 4,
-                    "name": "58 Chevy Pickup",
-                    "img": "http://st.hotrod.com/uploads/sites/21/2010/03/1003cct-01-o-1958-chevy-apache-pickup-truck-custom-front-bumper.jpg",
-                    "url": "http://www.pickuptrucks.com/html/history/chev_segment6.html"
-                }
-            ]
+            "name": "Trucks"
         },
         {
             "id": 3,
-            "name": "Motorcycles",
-            "items": [
-                {
-                    "id": 5,
-                    "name": "GSX1000",
-                    "img": "http://www.moto-station.com/ttesimages/motodivers/Nouveautes_2015/Comparatif_Kawasaki_Z1000_Suzuki_GSX-S_1000/Kawasaki_Z1000_Suzuki_GSX-S_1000_st4pz.jpg",
-                    "url": "http://www.suzukicycles.com/Product%20Lines/Cycles/Products/GSX-S1000/2016/GSXS1000A.aspx"
-                },
-                {
-                    "id": 6,
-                    "name": "CB1000R",
-                    "img": "http://www.motorcycle-usa.com/photogallerys/CB1000R_35.jpg",
-                    "url": "http://powersports.honda.com/2016/cb1000r.aspx"
-                },
-                {
-                    "id": 7,
-                    "name": "CB650F",
-                    "img": "http://www.cycleworld.com/sites/cycleworld.com/files/styles/large_1x_/public/images/2016/11/82724_17ym_cb650f.jpg",
-                    "url": "http://powersports.honda.com/2018/cb650f.aspx"
-                }
-            ]
+            "name": "Motorcycles"
+        }
+    ],
+    "items": [
+        {
+            "id": 1,
+            "name": "Tesla Model S",
+            "category": 1,
+            "img": "https://i.ytimg.com/vi/Eb41ppq-ATU/maxresdefault.jpg",
+            "url": "https://www.tesla.com/models"
         },
+        {
+            "id": 2,
+            "name": "Tesla Model 3",
+            "category": 1,
+            "img": "http://st.motortrend.com/uploads/sites/5/2016/03/Tesla-Model-3-front-view-from-above-in-silver.jpg",
+            "url": "https://www.tesla.com/model3"
+        },
+        {
+            "id": 3,
+            "name": "Ford Raptor",
+            "category": 2,
+            "img": "http://st.hotrod.com/uploads/sites/21/2016/12/034-Raptor-Press-Photo.jpg",
+            "url": "http://www.ford.com/trucks/f150/2018/models/f150-raptor/"
+        },
+        {
+            "id": 4,
+            "name": "58 Chevy Pickup",
+            "category": 2,
+            "img": "http://st.hotrod.com/uploads/sites/21/2010/03/1003cct-01-o-1958-chevy-apache-pickup-truck-custom-front-bumper.jpg",
+            "url": "http://www.pickuptrucks.com/html/history/chev_segment6.html"
+        },
+        {
+            "id": 5,
+            "name": "GSX1000",
+            "category": 3,
+            "img": "http://www.moto-station.com/ttesimages/motodivers/Nouveautes_2015/Comparatif_Kawasaki_Z1000_Suzuki_GSX-S_1000/Kawasaki_Z1000_Suzuki_GSX-S_1000_st4pz.jpg",
+            "url": "http://www.suzukicycles.com/Product%20Lines/Cycles/Products/GSX-S1000/2016/GSXS1000A.aspx"
+        },
+        {
+            "id": 6,
+            "name": "CB1000R",
+            "category": 3,
+            "img": "http://www.motorcycle-usa.com/photogallerys/CB1000R_35.jpg",
+            "url": "http://powersports.honda.com/2016/cb1000r.aspx"
+        },
+        {
+            "id": 7,
+            "name": "CB650F",
+            "category": 3,
+            "img": "http://www.cycleworld.com/sites/cycleworld.com/files/styles/large_1x_/public/images/2016/11/82724_17ym_cb650f.jpg",
+            "url": "http://powersports.honda.com/2018/cb650f.aspx"
+        }
     ]
 }
