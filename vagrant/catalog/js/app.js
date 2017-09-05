@@ -103,6 +103,36 @@
 
             callback.call(this, types);
 
+        },
+        delete: function(type, id, callback ){
+            callback = callback || function(){};
+
+            // cannot perform an update without an id
+            if(!id){
+                return;
+            }
+
+            // check for a valid type
+            if(type === 'category'){
+                types = this.data.categories;
+            }
+            else if(type === 'item'){
+                types = this.data.items;
+            }
+            else{
+                // invalid type
+                return;
+            }
+
+            /* https://github.com/tastejs/todomvc/blob/master/examples/vanillajs/js/store.js#L116 */
+            for(var i = 0; i < types.length; i++){
+                if(types[i].id === id){
+                    types.splice(i, 1);
+                    break;
+                }
+            }
+
+            callback.call(this, types);
         }
     };
 
