@@ -104,7 +104,7 @@
             callback.call(this, types);
 
         },
-        delete: function(type, id, callback ){
+        delete: function(type, id, callback){
             callback = callback || function(){};
 
             // cannot perform an update without an id
