@@ -198,6 +198,30 @@
                 app.view.render();
             });
         },
+        removeCategory: function(category){
+            category = (category || '').trim();
+
+            if(category === ''){
+                app.view.show('invalid category', 'error');
+                return;
+            }
+
+            // get the Category ID
+            app.model.read('category', {name: category}, function(categories){
+                if(categories.length === 0){
+                    app.view.show('Category not found.', 'error');
+                    return;
+                }
+                if(categories.length > 1){
+                    app.view.show('Multiple categories found. A random one will be choosen.', 'warning');
+                }
+
+                categoryId = categories[0].id;
+                app.model.delete('category', categoryId, function(){
+                    app.view.render();
+                });
+            });
+        },
         addItem: function(item, category){
             item = (item || '').trim();
             category = (category || '').trim();
