@@ -1,0 +1,11 @@
+body {
+    padding-top: 50px;
+    background-color: #ccc;
+}
+.main {
+    background-color: #fff;
+    padding: 60px 20px;
+}
+.right-divider {
+    border-right: solid #ccc 2px;
+}
