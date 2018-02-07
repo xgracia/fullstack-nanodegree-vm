@@ -55,7 +55,7 @@
                 <div class="col-md-8">
                     <h1>{{ selected_category.category }} Items ({{ category_items|length() }} item)</h1>
                     <ul>{% for item in category_items %}
-                        <li><a href="{{ url_for('showItem', category_id=item.category_id, item_id=item.id) }}">{{ item.item_name }}</a></li>{% endfor %}
+                        <li><a href="{{ url_for('showItem', item_id=item.id) }}">{{ item.item_name }}</a></li>{% endfor %}
                     </ul>
                 </div>
             </div>
