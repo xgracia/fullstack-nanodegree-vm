@@ -17,7 +17,7 @@
             <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
 
-        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="/static/css/main.css">
     </head>
     <body>
         <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -29,7 +29,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Item Catalog</a>
+                    <a class="navbar-brand" href="/">Item Catalog</a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <form class="navbar-form navbar-right">
@@ -48,20 +48,18 @@
             <div class="row main">
                 <div class="col-md-4 right-divider">
                     <h1>Categories</h1>
-                    <ul>
-                        <li><a href="#">Soccer</a></li>
-                        <li><a href="#">Baseball</a></li>
-                        <li><a href="#">Basketball</a></li>
+                    <ul>{% for category in categories %}
+                        <li><a href="{{ url_for('showCategory', category_id=category.id) }}">{{ category.category }}</a></li>{% endfor %}
                     </ul>
                 </div>
                 <div class="col-md-8">
-                    <h1>Bat <small>(Baseball)</small></h1>
-                    <p>Description: This is a bat. Hit stuff with it. Advanced users can embed nails into it for greater damage.</p>
+                    <h1>{{ selected_item.item_name }} <small>({{ selected_item.category }})</small></h1>
+                    <p>Description: {{ selected_item.description }}</p>
                     <!-- hide the following section by default -->
                     <!-- if a user created this item, then show -->
                     <section class="">
-                        <button type="button" class="btn btn-primary">Edit</button>
-                        <button type="button" class="btn btn-danger">Delete</button>
+                        <a href="{{ url_for('updateItem', item_id=selected_item.id) }}" class="btn btn-primary">Edit</a>
+                        <a href="{{ url_for('deleteItem', item_id=selected_item.id) }}" class="btn btn-danger">Delete</a>
                     </section>
                 </div>
             </div>
