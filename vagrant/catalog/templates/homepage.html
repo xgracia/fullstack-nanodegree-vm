@@ -48,10 +48,8 @@
             <div class="row main">
                 <div class="col-md-4 right-divider">
                     <h1>Categories</h1>
-                    <ul>
-                        <li><a href="#">Soccer</a></li>
-                        <li><a href="#">Baseball</a></li>
-                        <li><a href="#">Basketball</a></li>
+                    <ul>{% for category in categories %}
+                        <li><a href="#">{{ category.category }}</a></li>{% endfor %}
                     </ul>
                 </div>
                 <div class="col-md-8">
@@ -61,8 +59,8 @@
                         <button type="button" class="btn btn-primary">Add Item</button>
                     </section>
                     <h1>Latest Items</h1>
-                    <ul>
-                        <li><a href="#">Bat</a> <em class="text-muted">(Baseball)</em></li>
+                    <ul>{% for item in items|sort(reverse=True, attribute='id') %}{% if loop.index <= 5 %}
+                        <li><a href="#">{{ item.item_name }}</a> <em class="text-muted">({{ item.category }})</em></li>{% endif %}{% endfor %}
                     </ul>
                 </div>
             </div>
