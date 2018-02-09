@@ -22,12 +22,24 @@ def createCategory():
     return 'create a new category'
 
 @app.route('/categories/<int:category_id>/update/')
-def updateCategory():
+def updateCategory(category_id):
     return 'update category %s' % category_id
 
-@app.route('/categories/<int:category_id>/delete/')
-def deleteCategory():
-    return 'delete category %s' % category_id
+@app.route('/categories/<int:category_id>/delete/', methods=['GET', 'POST'])
+def deleteCategory(category_id):
+    categories = session.query(Category)
+    selected_category = categories.filter_by(id=category_id)
+    if not selected_category.one_or_none():
+        abort(404)
+    elif request.method == 'POST':
+        category_items = session.query(CatalogItem).filter_by(id=category_id).all()
+        if len(category_items):
+            abort(400)
+        selected_category.delete()
+        session.commit()
+        return redirect(url_for('homepage'))
+    else:
+        return render_template('delete-category.html', categories=categories.all(), selected_category=selected_category.one_or_none())
 
 @app.route('/categories/<int:category_id>/')
 @app.route('/categories/<int:category_id>/items/')
