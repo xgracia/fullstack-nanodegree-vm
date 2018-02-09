@@ -1,10 +1,11 @@
 {% extends "main-template.html" %}
                     {% block main %}
+                    {% if session.name %}
                     <!-- hide the following section by default -->
                     <!-- if a user is logged in, then show -->
                     <section>
                         <a href="{{ url_for('createItem') }}" class="btn btn-primary">Add Item</a>
-                    </section>
+                    </section>{% endif %}
                     <h1>Latest Items</h1>
                     <ul>{% for item in items|sort(reverse=True, attribute='id') %}{% if loop.index <= 5 %}
                         <li><a href="{{ url_for('showItem', item_id=item.id) }}">{{ item.item_name }}</a> <em class="text-muted">({{ item.category }})</em></li>{% endif %}{% endfor %}
