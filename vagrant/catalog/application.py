@@ -73,6 +73,7 @@ def gconnect():
 
     return 'Welcome %s, please wait...' % login_session['name']
 
+@app.route('/logout')
 @app.route('/gdisconnect')
 def gdisconnect():
     access_token = login_session.get('access_token')
