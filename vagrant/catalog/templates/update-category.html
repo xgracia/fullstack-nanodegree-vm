@@ -1,0 +1,12 @@
+{% extends "main-template.html" %}
+                    {% block main %}
+                    <h1>Edit Item</h1>
+                    <form action="" method="post">
+                        <div class="form-group">
+                            <label for="category">Category</label>
+                            <input type="text" class="form-control" id="category" name="category" list="categories" value="{{ selected_category.category }}" />
+                        </div>
+                        <section>
+                            <button type="submit" class="btn btn-primary">Edit</button>
+                        </section>
+                    </form>{% endblock %}
