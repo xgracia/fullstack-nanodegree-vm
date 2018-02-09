@@ -26,7 +26,8 @@ session.add(jiu_jitsu)
 session.commit()
 
 # Populate items
-session.add(CatalogItem(item_name='Soccer Ball', description='', category=soccer))
+session.add(
+    CatalogItem(item_name='Soccer Ball', description='', category=soccer))
 session.commit()
 
 session.add(CatalogItem(item_name='Bat', description='', category=baseball))

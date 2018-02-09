@@ -5,15 +5,16 @@ from sqlalchemy import create_engine
 
 Base = declarative_base()
 
+
 class Category(Base):
     __tablename__ = 'categories'
     id = Column(Integer, primary_key=True)
-    category = Column(String(75), nullable = False)
-    
+    category = Column(String(75), nullable=False)
+
     # print out cateogry name as a str
     def __str__(self):
         return self.category
-    
+
     # used for JSON serialization
     @property
     def serialize(self):
@@ -22,10 +23,11 @@ class Category(Base):
             'category': self.category
         }
 
+
 class CatalogItem(Base):
     __tablename__ = 'catalog_items'
     id = Column(Integer, primary_key=True)
-    item_name = Column(String(75), nullable = False)
+    item_name = Column(String(75), nullable=False)
     description = Column(String(255))
     category_id = Column(Integer, ForeignKey('categories.id'))
     category = relationship(Category)
