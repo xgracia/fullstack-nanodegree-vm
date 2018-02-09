@@ -1,0 +1,8 @@
+{% extends "main-template.html" %}
+                    {% block main %}
+                    <h1>Delete Category <small>{{ selected_category }}</small></h1>
+                    <p>Are you sure?</p>
+                    <form action="" method="post">
+                        <a href="{{ url_for('showCategory', category_id=selected_category.id) }}" class="btn btn-default">Cancel</a>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>{% endblock %}
