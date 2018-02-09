@@ -103,6 +103,8 @@ def homepage():
 
 @app.route('/categories/<int:category_id>/update/', methods=['GET', 'POST'])
 def updateCategory(category_id):
+    if 'name' not in login_session:
+        return redirect(url_for('showLogin'))
     categories = session.query(Category)
     selected_category = categories.filter_by(id=category_id)
     if not selected_category.one_or_none():
@@ -117,6 +119,8 @@ def updateCategory(category_id):
 
 @app.route('/categories/<int:category_id>/delete/', methods=['GET', 'POST'])
 def deleteCategory(category_id):
+    if 'name' not in login_session:
+        return redirect(url_for('showLogin'))
     categories = session.query(Category)
     selected_category = categories.filter_by(id=category_id)
     category_items = session.query(CatalogItem).filter_by(id=category_id).all()
@@ -143,6 +147,8 @@ def showCategory(category_id):
 
 @app.route('/items/new/', methods=['GET', 'POST'])
 def createItem():
+    if 'name' not in login_session:
+        return redirect(url_for('showLogin'))
     categories = session.query(Category).all()
     if request.method == 'POST':
         item_name = request.form.get('item_name') or abort(400)
@@ -163,6 +169,8 @@ def createItem():
 
 @app.route('/items/<int:item_id>/update/', methods=['GET', 'POST'])
 def updateItem(item_id):
+    if 'name' not in login_session:
+        return redirect(url_for('showLogin'))
     categories = session.query(Category).all()
     selected_item = session.query(CatalogItem).filter_by(id=item_id)
     if not selected_item.one_or_none():
@@ -185,6 +193,8 @@ def updateItem(item_id):
 
 @app.route('/items/<int:item_id>/delete/', methods=['GET', 'POST'])
 def deleteItem(item_id):
+    if 'name' not in login_session:
+        return redirect(url_for('showLogin'))
     categories = session.query(Category).all()
     selected_item = session.query(CatalogItem).filter_by(id=item_id)
     if not selected_item.one_or_none():
