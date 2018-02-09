@@ -39,12 +39,12 @@ def updateCategory(category_id):
 def deleteCategory(category_id):
     categories = session.query(Category)
     selected_category = categories.filter_by(id=category_id)
+    category_items = session.query(CatalogItem).filter_by(id=category_id).all()
     if not selected_category.one_or_none():
         abort(404)
+    if len(category_items):
+        abort(400)
     elif request.method == 'POST':
-        category_items = session.query(CatalogItem).filter_by(id=category_id).all()
-        if len(category_items):
-            abort(400)
         selected_category.delete()
         session.commit()
         return redirect(url_for('homepage'))
