@@ -10,9 +10,11 @@ class Category(Base):
     id = Column(Integer, primary_key=True)
     category = Column(String(75), nullable = False)
     
+    # print out cateogry name as a str
     def __str__(self):
         return self.category
     
+    # used for JSON serialization
     @property
     def serialize(self):
         return {
@@ -28,9 +30,11 @@ class CatalogItem(Base):
     category_id = Column(Integer, ForeignKey('categories.id'))
     category = relationship(Category)
 
+    # print out cateogry name as a str
     def __str__(self):
         return self.item_name
 
+    # used for JSON serialization
     @property
     def serialize(self):
         return {
