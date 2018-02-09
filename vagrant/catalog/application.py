@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for, abort, jsonify
+from flask import session as login_session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from db_setup import Base, Category, CatalogItem
+import random, string
 app = Flask(__name__)
 
 engine = create_engine('postgresql:///catalog')
@@ -9,6 +11,12 @@ Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
+
+@app.route('/login/')
+def showLogin():
+    state = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(32))
+    login_session['state'] = state
+    return "The current session state is %s" % login_session['state']
 
 @app.route('/')
 @app.route('/categories/')
@@ -132,4 +140,5 @@ def itemsApi():
 
 if __name__ == '__main__':
     app.debug = True
+    app.secret_key = 'b\x0b\xab\x91(\x92j.15\xd5\xebG\x01aTD\x9c\x11\xe8KP\x01r'
     app.run(host = '0.0.0.0', port = 5000)
