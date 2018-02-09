@@ -12,7 +12,7 @@ class Category(Base):
     
     def __str__(self):
         return self.category
-
+    
     @property
     def serialize(self):
         return {
@@ -30,6 +30,16 @@ class CatalogItem(Base):
 
     def __str__(self):
         return self.item_name
+
+    @property
+    def serialize(self):
+        return {
+            'id': self.id,
+            'item_name': self.item_name,
+            'description': self.description,
+            'category_id': self.category_id,
+            'category': self.category.category
+        }
 
 engine = create_engine('postgresql:///catalog')
 Base.metadata.create_all(engine)

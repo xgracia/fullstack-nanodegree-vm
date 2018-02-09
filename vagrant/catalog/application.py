@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, abort
+from flask import Flask, render_template, request, redirect, url_for, abort, jsonify
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from db_setup import Base, Category, CatalogItem
@@ -124,6 +124,11 @@ def showItem(item_id):
 def categoriesApi():
     categories = session.query(Category).order_by(Category.id).all()
     return jsonify([c.serialize for c in categories])
+
+@app.route('/api/items/')
+def itemsApi():
+    items = session.query(CatalogItem).order_by(CatalogItem.id).all()
+    return jsonify([i.serialize for i in items])
 
 if __name__ == '__main__':
     app.debug = True
