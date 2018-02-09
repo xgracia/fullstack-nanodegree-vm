@@ -1,9 +1,12 @@
 from flask import Flask, render_template, request, redirect, url_for, abort, jsonify
 from flask import session as login_session
+from flask import make_response
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from oauth2client.client import flow_from_clientsecrets
+from oauth2client.client import FlowExchangeError
 from db_setup import Base, Category, CatalogItem
-import random, string
+import random, string, httplib2, json, requests
 app = Flask(__name__)
 
 engine = create_engine('postgresql:///catalog')
@@ -12,11 +15,63 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
-@app.route('/login/')
+CLIENT_ID = json.load(open('client_secret.json', 'r'))['web']['client_id']
+
+@app.route('/login')
 def showLogin():
     state = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(32))
     login_session['state'] = state
-    return "The current session state is %s" % login_session['state']
+    return render_template('login.html', state=state)
+
+@app.route('/gconnect', methods=['POST'])
+def gconnect():
+    # validate state token
+    if request.args.get('state') != login_session['state']:
+        return jsonify('Invalid state'), 401
+    # obtain auth code
+    code = request.data
+
+    try:
+        # update the auth code into a creds object
+        oauth_flow = flow_from_clientsecrets('client_secret.json', scope='', redirect_uri='postmessage')
+        creds = oauth_flow.step2_exchange(code)
+    except FlowExchangeError:
+        return jsonify('Failed to upgrade the auth code'), 401
+    
+    # validate access token
+    access_token = creds.access_token
+    url = 'https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=%s' % access_token
+    result = requests.get(url).json()
+    # abort if error found
+    if result.get('error'):
+        return jsonify(result.get('error')), 500
+    
+    # verify access is for intended user
+    gplus_id = creds.id_token.get('sub')
+    if result.get('user_id') != gplus_id:
+        return jsonify('Invalid token.'), 401
+    
+    # verify token is for this app
+    if result.get('issued_to') != CLIENT_ID:
+        return jsonify('Invalid token.'), 401
+    
+    stored_access_token = login_session.get('access_token')
+    stored_gplus_id = login_session.get('gplus_id')
+    if stored_access_token and gplus_id == stored_gplus_id:
+        return 'Welcome back %s, please wait...' % login_session['name']
+    
+    login_session['access_token'] = creds.access_token
+    login_session['gplus_id'] = gplus_id
+
+    # Get user info
+    userinfo_url = "https://www.googleapis.com/oauth2/v1/userinfo"
+    params = {'access_token': creds.access_token, 'alt': 'json'}
+    data = requests.get(userinfo_url, params=params).json()
+    login_session['name'] = data['name']
+    login_session['picture'] = data['picture']
+    login_session['email'] = data['email']
+
+    return 'Welcome %s, please wait...' % login_session['name']
 
 @app.route('/')
 @app.route('/categories/')
