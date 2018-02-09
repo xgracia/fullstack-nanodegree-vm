@@ -1,0 +1,44 @@
+{% extends "main-template.html" %}
+{% block sidebar %}{% endblock %}
+{% block main %}
+        <div id="signinButton">
+            <span class="g-signin"
+                data-scope="openid email"
+                data-clientid="639766076729-b50jqjs6fidkma6cc7bt5ja8guvuocdu.apps.googleusercontent.com"
+                data-redirecturi="postmessage"
+                data-accesstype="offline"
+                data-cookiepolicy="single_host_origin"
+                data-callback="signInCallback"
+                data-approvalprompt="force">
+            </span>
+        </div>
+        <div id="result"></div>
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+        <script src="//apis.google.com/js/platform.js?onload=start"></script>
+        <script>
+            function signInCallback(authResult){
+                $('#signinButton').hide();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/gconnect?state={{ state }}',
+                    processData: false,
+                    data: authResult['code'],
+                    contentType: 'application/octet-stream; charset=utf-8',
+                    success: function(result){
+                        if(result){
+                            $('#result').html('Login successful...<br/><br/>' + result + '<br/><br/>redirecting...');
+                            setTimeout(function(){window.location.href = '/'}, 4000);
+                        }
+                        else if(authResult['error']){
+                            console.error(authResult['error']);
+                        }
+                        else {
+                            $('#result').html('Failed to make server-side call. Check your config and console.');
+                        }
+                    }
+                })
+            }
+        </script>
+{% endblock %}
