@@ -6,7 +6,7 @@ from sqlalchemy.orm import sessionmaker
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
 from db_setup import Base, Category, CatalogItem
-import random, string, httplib2, json, requests
+import random, string, json, requests
 app = Flask(__name__)
 
 engine = create_engine('postgresql:///catalog')
@@ -72,6 +72,26 @@ def gconnect():
     login_session['email'] = data['email']
 
     return 'Welcome %s, please wait...' % login_session['name']
+
+@app.route('/gdisconnect')
+def gdisconnect():
+    access_token = login_session.get('access_token')
+    if not access_token:
+        return 'No Access token found', 401
+    print 'Token to be disconnected: %s' % access_token
+    print 'For %s' % login_session['name']
+    url = 'https://accounts.google.com/o/oauth2/revoke?token=%s' % login_session['access_token']
+    r = requests.get(url)
+    print r.status_code
+    if r.ok:
+        del login_session['access_token']
+        del login_session['gplus_id']
+        del login_session['name']
+        del login_session['email']
+        del login_session['picture']
+        return jsonify('Successfully disconnected')
+    else:
+        return jsonify('Failed to revoke token'), 400
 
 @app.route('/')
 @app.route('/categories/')
