@@ -4,8 +4,8 @@
                     <ul>{% for item in category_items %}
                         <li><a href="{{ url_for('showItem', item_id=item.id) }}">{{ item.item_name }}</a></li>{% endfor %}
                     </ul>
-                    <section>
+                    {% if session.name %}<section>
                         <a href="{{ url_for('updateCategory', category_id=selected_category.id) }}" class="btn btn-primary">Edit Category</a>
                         {% if not category_items|length %}<a href="{{ url_for('deleteCategory', category_id=selected_category.id) }}" class="btn btn-danger">Delete Category</a>{% endif %}
-                    </section>
+                    </section>{% endif %}
                     {% endblock %}
