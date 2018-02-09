@@ -21,9 +21,19 @@ def homepage():
 def createCategory():
     return 'create a new category'
 
-@app.route('/categories/<int:category_id>/update/')
+@app.route('/categories/<int:category_id>/update/', methods=['GET', 'POST'])
 def updateCategory(category_id):
-    return 'update category %s' % category_id
+    categories = session.query(Category)
+    selected_category = categories.filter_by(id=category_id)
+    if not selected_category.one_or_none():
+        abort(404)
+    elif request.method == 'POST':
+        category = request.form.get('category') or selected_category.one_or_none().category
+        selected_category.update({'category': category})
+        session.commit()
+        return redirect(url_for('showCategory', category_id=selected_category.one_or_none().id))
+    else:
+        return render_template('update-category.html', categories=categories, selected_category=selected_category.one_or_none())
 
 @app.route('/categories/<int:category_id>/delete/', methods=['GET', 'POST'])
 def deleteCategory(category_id):
