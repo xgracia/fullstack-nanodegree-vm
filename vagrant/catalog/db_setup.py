@@ -13,6 +13,13 @@ class Category(Base):
     def __str__(self):
         return self.category
 
+    @property
+    def serialize(self):
+        return {
+            'id': self.id,
+            'category': self.category
+        }
+
 class CatalogItem(Base):
     __tablename__ = 'catalog_items'
     id = Column(Integer, primary_key=True)

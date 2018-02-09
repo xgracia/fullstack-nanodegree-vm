@@ -120,6 +120,11 @@ def showItem(item_id):
         abort(404)
     return render_template('show-item.html', categories=categories, selected_item=selected_item)
 
+@app.route('/api/categories/')
+def categoriesApi():
+    categories = session.query(Category).order_by(Category.id).all()
+    return jsonify([c.serialize for c in categories])
+
 if __name__ == '__main__':
     app.debug = True
     app.run(host = '0.0.0.0', port = 5000)
