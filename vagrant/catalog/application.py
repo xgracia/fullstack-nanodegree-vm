@@ -17,10 +17,6 @@ def homepage():
     items = session.query(CatalogItem).order_by(CatalogItem.id.desc()).limit(3)
     return render_template('homepage.html', categories=categories, items=items)
 
-@app.route('/categories/new/')
-def createCategory():
-    return 'create a new category'
-
 @app.route('/categories/<int:category_id>/update/', methods=['GET', 'POST'])
 def updateCategory(category_id):
     categories = session.query(Category)
