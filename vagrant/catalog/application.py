@@ -84,13 +84,13 @@ def gdisconnect():
     url = 'https://accounts.google.com/o/oauth2/revoke?token=%s' % login_session['access_token']
     r = requests.get(url)
     print r.status_code
+    del login_session['access_token']
+    del login_session['gplus_id']
+    del login_session['name']
+    del login_session['email']
+    del login_session['picture']
     if r.ok:
-        del login_session['access_token']
-        del login_session['gplus_id']
-        del login_session['name']
-        del login_session['email']
-        del login_session['picture']
-        return jsonify('Successfully disconnected')
+        return redirect(url_for('homepage'))
     else:
         return jsonify('Failed to revoke token'), 400
 
