@@ -15,7 +15,7 @@ import requests
 # Application variables
 app = Flask(__name__)
 
-engine = create_engine('postgresql:///catalog')
+engine = create_engine('postgresql://catalog:catalog@localhost/catalog')
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
