@@ -22,6 +22,7 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 CLIENT_ID = json.load(open('client_secret.json', 'r'))['web']['client_id']
+app.secret_key = 'b\x0b\xab\x91(\x92j.15\xd5\xebG\x01aTD\x9c\x11\xe8KP\x01'
 
 
 # Login page
@@ -316,5 +317,4 @@ def itemsApi():
 
 if __name__ == '__main__':
     app.debug = True
-    app.secret_key = 'b\x0b\xab\x91(\x92j.15\xd5\xebG\x01aTD\x9c\x11\xe8KP\x01'
     app.run(host='0.0.0.0', port=5000)
