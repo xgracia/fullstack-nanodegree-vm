@@ -21,7 +21,7 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
-CLIENT_ID = json.load(open('client_secret.json', 'r'))['web']['client_id']
+CLIENT_ID = json.load(open('/var/www/catalog/client_secret.json', 'r'))['web']['client_id']
 app.secret_key = 'b\x0b\xab\x91(\x92j.15\xd5\xebG\x01aTD\x9c\x11\xe8KP\x01'
 
 
@@ -46,7 +46,7 @@ def gconnect():
 
     try:
         # update the auth code into a creds object
-        oauth_flow = flow_from_clientsecrets('client_secret.json',
+        oauth_flow = flow_from_clientsecrets('/var/www/catalog/client_secret.json',
                                              scope='',
                                              redirect_uri='postmessage')
         creds = oauth_flow.step2_exchange(code)
