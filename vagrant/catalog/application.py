@@ -162,7 +162,7 @@ def deleteCategory(category_id):
         return redirect(url_for('showLogin'))
     categories = session.query(Category)
     selected_category = categories.filter_by(id=category_id)
-    category_items = session.query(CatalogItem).filter_by(id=category_id).all()
+    category_items = session.query(CatalogItem).filter_by(category_id=category_id).all()
     # Abort if the category is not found
     if not selected_category.one_or_none():
         abort(404)
