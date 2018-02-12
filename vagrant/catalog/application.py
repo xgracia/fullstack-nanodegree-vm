@@ -21,7 +21,8 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
-CLIENT_ID = json.load(open('/var/www/catalog/client_secret.json', 'r'))['web']['client_id']
+CLIENT_SECRET_FILE = '/var/www/catalog/client_secret.json'
+CLIENT_ID = json.load(open(CLIENT_SECRET_FILE, 'r'))['web']['client_id']
 app.secret_key = 'b\x0b\xab\x91(\x92j.15\xd5\xebG\x01aTD\x9c\x11\xe8KP\x01'
 
 
@@ -46,7 +47,7 @@ def gconnect():
 
     try:
         # update the auth code into a creds object
-        oauth_flow = flow_from_clientsecrets('/var/www/catalog/client_secret.json',
+        oauth_flow = flow_from_clientsecrets(CLIENT_SECRET_FILE,
                                              scope='',
                                              redirect_uri='postmessage')
         creds = oauth_flow.step2_exchange(code)
@@ -162,7 +163,8 @@ def deleteCategory(category_id):
         return redirect(url_for('showLogin'))
     categories = session.query(Category)
     selected_category = categories.filter_by(id=category_id)
-    category_items = session.query(CatalogItem).filter_by(category_id=category_id).all()
+    category_items = session.query(CatalogItem)
+    category_items = category_items.filter_by(category_id=category_id).all()
     # Abort if the category is not found
     if not selected_category.one_or_none():
         abort(404)
